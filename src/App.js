@@ -1,24 +1,23 @@
-import logo from './logo.svg';
-import './App.css';
+import { Fragment } from "react";
+import Login from "./components/auth/Login";
+import { Routes, Route } from "react-router-dom";
+import NuevaCuenta from "./components/auth/NuevaCuenta";
+import Proyectos from "./components/proyectos/Proyectos";
+import ProyectoState from './context/proyectos/PoryectoState'
 
 function App() {
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <ProyectoState>
+      <Fragment>
+        <Routes>
+          <Route path='/' element={<Login></Login>}></Route>
+          <Route path='/nueva-cuenta' element={<NuevaCuenta></NuevaCuenta>}></Route>
+          <Route path='/proyectos' element={<Proyectos></Proyectos>}></Route>
+        </Routes>
+      </Fragment>
+    </ProyectoState>
   );
 }
 
