@@ -1,19 +1,16 @@
 import React, { Fragment, useContext } from 'react';
 import Tarea from './Tarea.js';
 import proyectoContext from '../../context/proyectos/proyectoContext.js';
+import TareasContext from '../../context/tareas/TareasContext.js';
 
 const ListadoTareas = () => {
 
     const { proyecto, eliminarProyecto } = useContext(proyectoContext);
+    const { tareasPorProyecto } = useContext(TareasContext);
 
     if (!proyecto) return <h2>Selecciona un proyecto</h2>
 
-    const tareas = [
-        { nombre: 'Elegir color', estado: true },
-        { nombre: 'Elegir tamaño', estado: false },
-        { nombre: 'Elegir fuente', estado: false },
-        { nombre: 'dibujar dibujo', estado: true }
-    ]
+    
 
     return (
         <Fragment>
@@ -21,10 +18,10 @@ const ListadoTareas = () => {
 
             <ul className='listado-tareas'>
                 {
-                    tareas.length === 0 ? (
+                    tareasPorProyecto.length === 0 ? (
                         <li className='tarea'><p>No hat tareas</p></li>
                     ) : (
-                        tareas.map(tarea => (<Tarea tarea={tarea}></Tarea>))
+                        tareasPorProyecto.map(tarea => (<Tarea tarea={tarea}></Tarea>))
                     )
                 }
             </ul>

@@ -50,7 +50,7 @@ const ProyectoState = props => {
     }
 
     const agregarProyecto = proyecto=> {
-        proyecto.id= uuidv4();
+        proyecto.id = uuidv4();
         dispatch({
             type: AGREGAR_PROYECTO,
             payload: proyecto
