@@ -2,6 +2,7 @@ import React, { Fragment, useContext } from 'react';
 import Tarea from './Tarea.js';
 import proyectoContext from '../../context/proyectos/proyectoContext.js';
 import TareasContext from '../../context/tareas/TareasContext.js';
+import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 const ListadoTareas = () => {
 
@@ -10,7 +11,7 @@ const ListadoTareas = () => {
 
     if (!proyecto) return <h2>Selecciona un proyecto</h2>
 
-    
+
 
     return (
         <Fragment>
@@ -20,15 +21,23 @@ const ListadoTareas = () => {
                 {
                     tareasPorProyecto.length === 0 ? (
                         <li className='tarea'><p>No hat tareas</p></li>
-                    ) : (
-                        tareasPorProyecto.map(tarea => (<Tarea tarea={tarea}></Tarea>))
-                    )
+                    ) : <TransitionGroup>
+                        {tareasPorProyecto.map(tarea => (
+                            <CSSTransition
+                                key={tarea.id}
+                                timeout={250}
+                                classNames='tarea'
+                            >
+                                <Tarea tarea={tarea}></Tarea>
+                            </CSSTransition>
+                        ))}
+                    </TransitionGroup>
                 }
             </ul>
             <button
                 type='button'
                 className='btn incompleto'
-                onClick={()=> eliminarProyecto(proyecto.id)}
+                onClick={() => eliminarProyecto(proyecto.id)}
             >Eliminar Proyecto &times;</button>
         </Fragment>
     );

@@ -5,20 +5,28 @@ import { v4 as uuidv4 } from "uuid"
 import { useEffect } from 'react';
 
 const FormTarea = () => {
-    const [error, setError] = useState(false)
     const [nuevaTarea, setNuevaTarea] = useState({
         nombre: '',
         estado: false
-    })   
-    
-    const {nombre} = nuevaTarea;
+    })
+    const { nombre } = nuevaTarea;
     const { proyecto } = useContext(proyectoContext);
-    const { tareas, agregarTarea, obtenerTareasProyecto } = useContext(TareasContext);
-    
-    useEffect(()=> {
-        obtenerTareasProyecto(proyecto.id);
+    const {
+        tareas,
+        agregarTarea,
+        obtenerTareasProyecto,
+        erorFormTarea,
+        validarFormTarea,
+        tareaActual,
+        setTareaActual,
+        guardarCambiosTarea
+    } = useContext(TareasContext);
+
+    useEffect(() => {
+        if (proyecto) obtenerTareasProyecto(proyecto.id);
+        if (tareaActual) setNuevaTarea(tareaActual)
         //eslint-disable-next-line
-    }, [tareas])
+    }, [tareas, tareaActual])
 
     if (!proyecto) return null;
 
@@ -33,20 +41,31 @@ const FormTarea = () => {
 
     const prepararTarea = e => {
         e.preventDefault();
-        if(nombre.trim() === '') {
-            setError(true)
-            return
+        if (nombre.trim() === '') {
+            validarFormTarea(true);
+            return;
         }
-        setError(false)
-        nuevaTarea.id = uuidv4();
-        nuevaTarea.proyectoId = proyecto.id;
-        agregarTarea(nuevaTarea)
+        if (tareaActual) {
+            guardarCambiosTarea(nuevaTarea)
+        } else {
+            nuevaTarea.id = uuidv4();
+            nuevaTarea.proyectoId = proyecto.id;
+            agregarTarea(nuevaTarea);
+        }
         setNuevaTarea({
             nombre: '',
             estado: false
         })
     }
 
+    const cancelarEdicion = () => {
+        setTareaActual(null);
+        validarFormTarea(false);
+        setNuevaTarea({
+            nombre: '',
+            estado: false
+        })
+    }
 
     return (
         <div className='formulario'>
@@ -60,15 +79,20 @@ const FormTarea = () => {
                         onChange={handleChange}
                         value={nombre}
                     />
+                    {tareaActual ?
+                        <button
+                            onClick={cancelarEdicion}
+                        >Cancelar edición</button>
+                        : null}
                 </div>
                 {
-                    error ? <p>Debe introducir un nombre de tarea</p> : null 
+                    erorFormTarea ? <p className='mensaje error'>Debe introducir un nombre de tarea</p> : null
                 }
                 <div className='contenedor-input'>
                     <input
                         type="submit"
                         className='btn btn-block btn-primario btn-submit'
-                        value='Agregar Tarea'
+                        value={tareaActual ? 'Guardar cambios' : 'Agregar Tarea'}
                     />
                 </div>
             </form>
