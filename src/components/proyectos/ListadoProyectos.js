@@ -1,12 +1,11 @@
 import React, { useContext, useEffect } from 'react';
 import Proyecto from './Proyecto';
-import proyectoContext from '../../context/proyectos/proyectoContext';
+import ProyectoContext from '../../context/proyectos/ProyectoContext';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 
 const ListadoProyectos = () => {
-    const proyectosContext = useContext(proyectoContext)
-    const { proyectos, obtenerProyectos } = proyectosContext;
+    const { proyectos, obtenerProyectos } = useContext(ProyectoContext)
 
     useEffect(() => {
         obtenerProyectos();

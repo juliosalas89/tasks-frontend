@@ -5,22 +5,28 @@ import NuevaCuenta from "./components/auth/NuevaCuenta";
 import Proyectos from "./components/proyectos/Proyectos";
 import ProyectoState from './context/proyectos/PoryectoState'
 import TareasState from "./context/tareas/TareasState";
+import AlertaState from "./context/alertas/AlertasState";
+import AuthState from "./context/autenticacion/AuthState";
 
 function App() {
 
 
   return (
-    <TareasState>
-      <ProyectoState>
-        <Fragment>
-          <Routes>
-            <Route path='/' element={<Login></Login>}></Route>
-            <Route path='/nueva-cuenta' element={<NuevaCuenta></NuevaCuenta>}></Route>
-            <Route path='/proyectos' element={<Proyectos></Proyectos>}></Route>
-          </Routes>
-        </Fragment>
-      </ProyectoState>
-    </TareasState>
+    <AuthState>
+      <AlertaState>
+        <TareasState>
+          <ProyectoState>
+            <Fragment>
+              <Routes>
+                <Route path='/' element={<Login></Login>}></Route>
+                <Route path='/nueva-cuenta' element={<NuevaCuenta></NuevaCuenta>}></Route>
+                <Route path='/proyectos' element={<Proyectos></Proyectos>}></Route>
+              </Routes>
+            </Fragment>
+          </ProyectoState>
+        </TareasState>
+      </AlertaState>
+    </AuthState>
   );
 }
 

@@ -7,7 +7,7 @@ import {
     ELIMINAR_PROYECTO
 } from '../../types';
 
-const funcionSwitch = (state, action) => {
+const proyectoReducer = (state, action) => {
     switch (action.type) {
         case FORMULARIO_PROYECTO:
             return {
@@ -49,4 +49,4 @@ const funcionSwitch = (state, action) => {
     }
 }
 
-export default funcionSwitch;
+export default proyectoReducer;

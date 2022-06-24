@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import proyectoContext from '../../context/proyectos/proyectoContext';
+import ProyectoContext from '../../context/proyectos/ProyectoContext';
 import TareasContext from '../../context/tareas/TareasContext';
 import { v4 as uuidv4 } from "uuid"
 import { useEffect } from 'react';
@@ -10,7 +10,7 @@ const FormTarea = () => {
         estado: false
     })
     const { nombre } = nuevaTarea;
-    const { proyecto } = useContext(proyectoContext);
+    const { proyecto } = useContext(ProyectoContext);
     const {
         tareas,
         agregarTarea,

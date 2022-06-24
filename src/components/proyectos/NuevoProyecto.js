@@ -1,5 +1,5 @@
 import React, { Fragment, useContext, useState } from 'react';
-import proyectoContext from '../../context/proyectos/proyectoContext';
+import ProyectoContext from '../../context/proyectos/ProyectoContext';
 
 
 const NuevoProyecto = () => {
@@ -7,7 +7,7 @@ const NuevoProyecto = () => {
         nombre: ''
     })
 
-    const proyectosContext = useContext(proyectoContext);
+    const proyectosContext = useContext(ProyectoContext);
     const { formulario, errorform, mostrarFormulario, agregarProyecto, formularioVaico } = proyectosContext;
 
     const { nombre } = proyecto;

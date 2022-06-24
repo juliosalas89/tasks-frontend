@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import proyectoContext from '../../context/proyectos/proyectoContext';
+import ProyectoContext from '../../context/proyectos/ProyectoContext';
 import TareasContext from '../../context/tareas/TareasContext';
 
 const Proyecto = ({ proyecto }) => {
-    const { proyectoActual } = useContext(proyectoContext);
+    const { proyectoActual } = useContext(ProyectoContext);
     const { obtenerTareasProyecto } = useContext(TareasContext);
 
     const seleccionarPoryecto = proyecto => {

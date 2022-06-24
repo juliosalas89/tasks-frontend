@@ -9,7 +9,7 @@ import {
 } from "../../types";
 
 
-const funcionSwithc = (state, action) => {
+const tareasReducer = (state, action) => {
     switch (action.type) {
         case TAREAS_PROYECTO:
             return {
@@ -55,4 +55,4 @@ const funcionSwithc = (state, action) => {
     }
 }
 
-export default funcionSwithc;
+export default tareasReducer;

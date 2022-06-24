@@ -1,6 +1,6 @@
 import React, { useReducer } from 'react';
 import TareasContext from './TareasContext';
-import TareasReducer from './TareasReducer'
+import tareasReducer from './tareasReducer'
 import {
     AGREGAR_TAREA,
     EDITAR_TAREA,
@@ -37,7 +37,7 @@ const TareasState = (props) => {
         tareaActual: null
     }
 
-    const [state, dispatch] = useReducer(TareasReducer, initialState);
+    const [state, dispatch] = useReducer(tareasReducer, initialState);
 
 
     const obtenerTareasProyecto = proyectoId => {

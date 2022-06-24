@@ -2,7 +2,7 @@ import React, { useReducer } from 'react';
 import { v4 as uuidv4 } from "uuid"
 
 //importamos el context creado en proyectoContext
-import proyectoContext from './proyectoContext';
+import ProyectoContext from './ProyectoContext';
 //importamos el Reducer creado en proyectoReducer
 import proyectoReducer from './proyectoReducer';
 //Ahora importamos los types que vamos creando en la carpeta types, en el archivo index.js (le pusimos ese nombre para no tener que importar con el nombre del archivo, tambien podriamos haberle llamado de otra forma)
@@ -79,7 +79,7 @@ const ProyectoState = props => {
 
     //por ultimo creamos el return del context. en el value pasamos el state inicial como se ve aquí:
     return (
-        <proyectoContext.Provider
+        <ProyectoContext.Provider
             value={{
                 proyectos: state.proyectos,
                 formulario: state.formulario,
@@ -93,7 +93,7 @@ const ProyectoState = props => {
                 eliminarProyecto
             }}>
             {props.children}
-        </proyectoContext.Provider>
+        </ProyectoContext.Provider>
     )
 }
 

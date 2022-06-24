@@ -1,12 +1,12 @@
 import React, { Fragment, useContext } from 'react';
 import Tarea from './Tarea.js';
-import proyectoContext from '../../context/proyectos/proyectoContext.js';
+import ProyectoContext from '../../context/proyectos/ProyectoContext.js';
 import TareasContext from '../../context/tareas/TareasContext.js';
 import { CSSTransition, TransitionGroup } from 'react-transition-group'
 
 const ListadoTareas = () => {
 
-    const { proyecto, eliminarProyecto } = useContext(proyectoContext);
+    const { proyecto, eliminarProyecto } = useContext(ProyectoContext);
     const { tareasPorProyecto } = useContext(TareasContext);
 
     if (!proyecto) return <h2>Selecciona un proyecto</h2>
