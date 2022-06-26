@@ -18,18 +18,22 @@ const authReducer = (state, action) => {
                 autenticado: true,
                 mensajeNuevoUsuario: null
             }
+        case CERRAR_SESION:
         case LOGIN_ERROR:
         case REGISTRO_ERROR:
             localStorage.removeItem('token')
             return {
                 ...state,
                 token: null,
+                usuarioActual: null,
+                autenticado: null,
                 mensajeUsuario: action.payload
             }
         case OBTENER_USUARIO:
             return {
                 ...state,
-                usuarioActual: action.payload
+                usuarioActual: action.payload,
+                autenticado: true
             }
         default:
             return state;
