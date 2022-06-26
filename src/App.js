@@ -10,7 +10,6 @@ import AuthState from "./context/autenticacion/AuthState";
 
 function App() {
 
-
   return (
     <AuthState>
       <AlertaState>

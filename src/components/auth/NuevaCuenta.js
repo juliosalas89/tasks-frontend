@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import AlertasContext from '../../context/alertas/AlertasContext';
+import AuthContext from '../../context/autenticacion/AuthContext';
 
 const NuevaCuenta = () => {
     const [nuevoUsuario, setNuevoUsuario] = useState({
@@ -11,7 +12,8 @@ const NuevaCuenta = () => {
         confirmar: ''
     });
 
-    const { alerta, setAlerta } = useContext(AlertasContext)
+    const { alerta, setAlerta } = useContext(AlertasContext);
+    const { registrarUsuario } = useContext(AuthContext);
 
     const { nombre, email, password, confirmar } = nuevoUsuario;
 
@@ -21,7 +23,7 @@ const NuevaCuenta = () => {
             [e.target.name]: e.target.value
         };
         setNuevoUsuario(nuevosDatos);
-    }
+    };
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -42,7 +44,11 @@ const NuevaCuenta = () => {
             return;
         }
 
-        //Guardar en state
+        registrarUsuario({
+            nombre,
+            email,
+            password
+        });
     }
 
 
