@@ -8,20 +8,28 @@ import {
 } from '../../types';
 
 const authReducer = (state, action) => {
-    switch(action.type) {
+    switch (action.type) {
+        case LOGIN_EXITOSO:
         case REGISTRO_EXITOSO:
             //guardamos el token que llega en el local storage
             localStorage.setItem('token', action.payload.token);
             return {
                 ...state,
                 autenticado: true,
-                mensaje: null
+                mensajeNuevoUsuario: null
             }
+        case LOGIN_ERROR:
         case REGISTRO_ERROR:
+            localStorage.removeItem('token')
             return {
                 ...state,
                 token: null,
-                mensaje: action.payload
+                mensajeUsuario: action.payload
+            }
+        case OBTENER_USUARIO:
+            return {
+                ...state,
+                usuarioActual: action.payload
             }
         default:
             return state;

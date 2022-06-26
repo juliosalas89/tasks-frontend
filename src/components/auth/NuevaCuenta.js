@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { useEffect } from 'react';
 import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import AlertasContext from '../../context/alertas/AlertasContext';
 import AuthContext from '../../context/autenticacion/AuthContext';
 
@@ -11,11 +12,18 @@ const NuevaCuenta = () => {
         password: '',
         confirmar: ''
     });
+    const navigate = useNavigate();
 
     const { alerta, setAlerta } = useContext(AlertasContext);
-    const { registrarUsuario } = useContext(AuthContext);
-
+    const { mensajeUsuario, autenticado, registrarUsuario } = useContext(AuthContext);
     const { nombre, email, password, confirmar } = nuevoUsuario;
+
+    useEffect(()=>{
+        if (autenticado) navigate('/proyectos')
+        if(mensajeUsuario) {
+            setAlerta(mensajeUsuario.msj, 'alerta-error')
+        }
+    }, [autenticado, mensajeUsuario])
 
     const handleChange = e => {
         const nuevosDatos = {

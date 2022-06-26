@@ -2,7 +2,8 @@ import React from 'react';
 import { useReducer } from 'react';
 import AuthContext from './AuthContext.js'
 import authReducer from './authReducer.js';
-import clienteAxios from '../../config/axios.js'
+import clienteAxios from '../../config/axios.js';
+import tokenAuth from '../../config/tokenAuth.js';
 import {
     REGISTRO_EXITOSO,
     REGISTRO_ERROR,
@@ -17,8 +18,8 @@ const AuthState = props => {
     const initialState = {
         token: localStorage.getItem('token'),
         autenticado: null,
-        usuario: null,
-        mensaje: null
+        usuarioActual: null,
+        mensajeUsuario: null
     }
 
     const [state, dispatch] = useReducer(authReducer, initialState);
@@ -30,11 +31,11 @@ const AuthState = props => {
                 type: REGISTRO_EXITOSO,
                 payload: respuesta.data //pasamos la respuesta pq ahí viene el token desde el back
             })
-
+            setUsuarioActual(respuesta.data.token)
         } catch (error) {
-            // console.log(error.response.data);
+            console.log(error.response.data.mensaje);
             const alerta = {
-                msj: error.response.data,
+                msj: error.response.data.mensaje,
                 categoria: 'alerta-error'
             }
 
@@ -45,13 +46,60 @@ const AuthState = props => {
         }
     }
 
+    const iniciarSesion = async datos => {
+        try {
+            const respuesta = await clienteAxios.post('/api/auth', datos);
+            
+            dispatch({
+                type: LOGIN_EXITOSO,
+                payload: respuesta.data
+            })
+
+            setUsuarioActual(respuesta.data.token)
+
+        } catch (error) {
+            console.log(error.response.data.mensaje);
+            const alerta = {
+                msj: error.response.data.mensaje,
+                categoria: 'alerta-error'
+            }
+
+            dispatch({
+                type: LOGIN_ERROR,
+                payload: alerta
+            })
+        }
+    }
+
+    const setUsuarioActual = async token => {
+        if (token) {
+            //TODO: funcion para enviar el token en los headers de todos los req
+            tokenAuth(token)
+        }
+        try {
+            const respuesta = await clienteAxios.get('/api/auth')
+            // console.log(respuesta.data.usuarioAutenticado)
+            dispatch({
+                type: OBTENER_USUARIO,
+                payload: respuesta.data.usuarioAutenticado
+            })
+            console.log(state.usuarioActual)
+        } catch (error) {
+            console.log(error.response)
+            dispatch({
+                type: LOGIN_ERROR
+            })
+        }
+    }
+
     return (
         <AuthContext.Provider
             value={{
                 token: state.token,
                 autenticado: state.autenticado,
-                usuario: state.usuario,
-                mensaje: state.mensaje,
+                usuarioActual: state.usuarioActual,
+                mensajeUsuario: state.mensajeUsuario,
+                iniciarSesion,
                 registrarUsuario
             }}
         >
