@@ -1,25 +1,25 @@
 import { Fragment } from "react";
 import Login from "./components/auth/Login";
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route} from "react-router-dom";
 import NuevaCuenta from "./components/auth/NuevaCuenta";
-import Proyectos from "./components/proyectos/Proyectos";
 import ProyectoState from './context/proyectos/PoryectoState'
 import TareasState from "./context/tareas/TareasState";
 import AlertaState from "./context/alertas/AlertasState";
 import AuthState from "./context/autenticacion/AuthState";
 import tokenAuth from "./config/tokenAuth";
 import { useEffect } from "react";
+import Proyectos from "./components/proyectos/Proyectos";
 
 
 
 function App() {
 
-  useEffect(()=>{
+  useEffect(() => {
     const token = localStorage.getItem('token')
     if (token) {
       tokenAuth(token)
     }
-  },[])
+  }, [])
 
 
   return (

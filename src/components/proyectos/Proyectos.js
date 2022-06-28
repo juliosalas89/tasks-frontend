@@ -6,15 +6,19 @@ import Barra from '../layout/Barra';
 import Sidebar from '../layout/Sidebar';
 import FormTarea from '../tareas/FormTarea';
 import ListadoTareas from '../tareas/ListadoTareas';
+import { useNavigate } from 'react-router-dom';
 
 const Proyectos = () => {
+    const { setUsuarioActual, token, autenticado, cargando } = useContext(AuthContext);
+    const navigate = useNavigate()
 
-    const { setUsuarioActual, token} = useContext(AuthContext);
-
-    useEffect(()=> {
+    useEffect(() => {
         setUsuarioActual(token);
+        if (!autenticado && !cargando) navigate('/');
         //eslint-disable-next-line
-    },[])
+    }, [cargando, autenticado])
+
+
 
     return (
         <div className='contenedor-app'>

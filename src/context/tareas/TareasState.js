@@ -1,6 +1,7 @@
 import React, { useReducer } from 'react';
 import TareasContext from './TareasContext';
-import tareasReducer from './tareasReducer'
+import tareasReducer from './tareasReducer';
+import clienteAxios from '../../config/axios.js'
 import {
     AGREGAR_TAREA,
     EDITAR_TAREA,
@@ -14,24 +15,6 @@ import {
 
 const TareasState = (props) => {
     const initialState = {
-        tareas: [
-            {id: 1, nombre: 'Elegir color', estado: true, proyectoId: 1 },
-            {id: 2, nombre: 'Elegir tamaño', estado: false, proyectoId: 2 },
-            {id: 3, nombre: 'Elegir fuente', estado: false, proyectoId: 3 },
-            {id: 4, nombre: 'dibujar dibujo', estado: true, proyectoId: 4 },
-            {id: 5, nombre: 'Elegir color', estado: true, proyectoId: 1 },
-            {id: 6, nombre: 'Elegir tamaño', estado: false, proyectoId: 2 },
-            {id: 7, nombre: 'Elegir fuente', estado: false, proyectoId: 3 },
-            {id: 8, nombre: 'dibujar dibujo', estado: true, proyectoId: 4 },
-            {id: 9, nombre: 'Elegir color', estado: true, proyectoId: 1 },
-            {id: 10, nombre: 'Elegir tamaño', estado: false, proyectoId: 2 },
-            {id: 11, nombre: 'Elegir fuente', estado: false, proyectoId: 3 },
-            {id: 12, nombre: 'dibujar dibujo', estado: true, proyectoId: 4 },
-            {id: 13, nombre: 'Elegir color', estado: true, proyectoId: 1 },
-            {id: 14, nombre: 'Elegir tamaño', estado: false, proyectoId: 2 },
-            {id: 15, nombre: 'Elegir fuente', estado: false, proyectoId: 3 },
-            {id: 16, nombre: 'dibujar dibujo', estado: true, proyectoId: 4 }
-        ],
         tareasPorProyecto: [],
         erorFormTarea: false,
         tareaActual: null
@@ -40,18 +23,28 @@ const TareasState = (props) => {
     const [state, dispatch] = useReducer(tareasReducer, initialState);
 
 
-    const obtenerTareasProyecto = proyectoId => {
-        dispatch({
-            type: TAREAS_PROYECTO,
-            payload: proyectoId
-        })
+    const obtenerTareasProyecto = async proyectoId => {
+        try {
+            const respuesta = await clienteAxios.get('/api/tareas', { params: { proyectoId } });
+            dispatch({
+                type: TAREAS_PROYECTO,
+                payload: respuesta.data.tareas
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
-    const agregarTarea = tarea => {
-        dispatch({
-            type: AGREGAR_TAREA,
-            payload: tarea
-        })
+    const agregarTarea = async tarea => {
+        try {
+            const respuesta = await clienteAxios.post('/api/tareas', tarea)
+            dispatch({
+                type: AGREGAR_TAREA,
+                payload: respuesta.data.tarea
+            })
+        } catch (error) {
+            console.log(error)
+        }
     }
 
     const validarFormTarea = booleano => {
@@ -61,11 +54,17 @@ const TareasState = (props) => {
         })
     }
 
-    const eliminarTarea = tareaId => {
+    const eliminarTarea = async tarea => {
+        try {
+            await clienteAxios.delete(`/api/tareas/${tarea._id}`, { params: { proyectoId: tarea.proyectoId } });
         dispatch({
             type: ELIMINAR_TAREA,
-            payload: tareaId
+            payload: tarea._id
         })
+        } catch (error) {
+            console.log(error)
+        }
+
     }
 
     const cambiarEstadoTarea = tarea => {
@@ -92,7 +91,6 @@ const TareasState = (props) => {
     return (
         <TareasContext.Provider
             value={{
-                tareas: state.tareas,
                 tareasPorProyecto: state.tareasPorProyecto,
                 erorFormTarea: state.erorFormTarea,
                 tareaActual: state.tareaActual,

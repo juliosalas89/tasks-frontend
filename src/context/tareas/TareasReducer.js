@@ -14,12 +14,12 @@ const tareasReducer = (state, action) => {
         case TAREAS_PROYECTO:
             return {
                 ...state,
-                tareasPorProyecto: state.tareas.filter(tarea => tarea.proyectoId === action.payload)
+                tareasPorProyecto: action.payload
             };
         case AGREGAR_TAREA:
             return {
                 ...state,
-                tareas: [action.payload, ...state.tareas],
+                tareasPorProyecto: [action.payload, ...state.tareasPorProyecto],
                 erorFormTarea: false,
             }
         case VALIDAR_FORMTAREA:
@@ -30,12 +30,12 @@ const tareasReducer = (state, action) => {
         case ELIMINAR_TAREA:
             return {
                 ...state,
-                tareas: state.tareas.filter(tarea => tarea.id !== action.payload)
+                tareasPorProyecto: state.tareasPorProyecto.filter(tarea => tarea._id !== action.payload)
             }
         case ESTADO_TAREA:
             return {
                 ...state,
-                tareas: state.tareas.map(tarea => tarea.id === action.payload.id ? action.payload : tarea)
+                tareasPorProyecto: state.tareasPorProyecto.map(tarea => tarea.id === action.payload.id ? action.payload : tarea)
             }
         case TAREA_ACTUAL:
             return {
@@ -46,7 +46,7 @@ const tareasReducer = (state, action) => {
         case EDITAR_TAREA:
             return {
                 ...state,
-                tareas: state.tareas.map(tarea => tarea.id === action.payload.id ? action.payload : tarea),
+                tareasPorProyecto: state.tareasPorProyecto.map(tarea => tarea.id === action.payload.id ? action.payload : tarea),
                 erorFormTarea: false,
                 tareaActual: null
             }

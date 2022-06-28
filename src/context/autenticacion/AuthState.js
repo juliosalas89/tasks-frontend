@@ -18,6 +18,7 @@ const AuthState = props => {
     const initialState = {
         token: localStorage.getItem('token'),
         autenticado: null,
+        cargando: true,
         usuarioActual: null,
         mensajeUsuario: null
     }
@@ -83,7 +84,6 @@ const AuthState = props => {
                 type: OBTENER_USUARIO,
                 payload: respuesta.data.usuarioAutenticado
             })
-            console.log(state.usuarioActual)
         } catch (error) {
             console.log(error.response)
             dispatch({
@@ -105,6 +105,7 @@ const AuthState = props => {
                 autenticado: state.autenticado,
                 usuarioActual: state.usuarioActual,
                 mensajeUsuario: state.mensajeUsuario,
+                cargando: state.cargando,
                 iniciarSesion,
                 registrarUsuario,
                 setUsuarioActual,

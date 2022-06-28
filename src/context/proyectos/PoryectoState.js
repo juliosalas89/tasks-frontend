@@ -1,5 +1,5 @@
 import React, { useReducer } from 'react';
-import { v4 as uuidv4 } from "uuid"
+import clienteAxios from '../../config/axios';
 
 //importamos el context creado en proyectoContext
 import ProyectoContext from './ProyectoContext';
@@ -12,24 +12,21 @@ import {
     AGREGAR_PROYECTO,
     ERROR_FORMULARIO,
     PROYECTO_ACTUAL,
-    ELIMINAR_PROYECTO
+    ELIMINAR_PROYECTO,
+    PROYECTO_ERROR
 } from '../../types';
 
 
 
 //Creamos el Provider
 const ProyectoState = props => {
-    const proyectos = [
-        { id: 1, nombre: 'tienda virtual' },
-        { id: 2, nombre: 'facturacion' },
-        { id: 3, nombre: 'login' }
-    ]
     //definimos el estado inicial
     const initialState = {
         proyectos: [],
         formulario: false,
         errorform: false,
-        proyecto: null
+        proyectoActual: null,
+        mensaje: null
     }
 
     //Dispatch para ejecutar las acciones
@@ -42,19 +39,42 @@ const ProyectoState = props => {
         })
     }
 
-    const obtenerProyectos = () => {
-        dispatch({
-            type: OBTENER_PROYECTOS,
-            payload: proyectos
-        })
+    const obtenerProyectos = async () => {
+        try {
+            const respuesta = await clienteAxios.get('api/proyectos');
+            dispatch({
+                type: OBTENER_PROYECTOS,
+                payload: respuesta.data.proyectos
+            })
+        } catch (error) {
+            const alerta = {
+                msj: 'Hubo un error',
+                categoria: 'alerta-error'
+            }
+            dispatch({
+                type: PROYECTO_ERROR,
+                payload: alerta
+            })
+        }
     }
 
-    const agregarProyecto = proyecto=> {
-        proyecto.id = uuidv4();
-        dispatch({
-            type: AGREGAR_PROYECTO,
-            payload: proyecto
-        })
+    const agregarProyecto = async proyecto=> {
+        try {
+            const respuesta = await clienteAxios.post('/api/proyectos', proyecto);
+            dispatch({
+                type: AGREGAR_PROYECTO,
+                payload: respuesta.data.proyecto
+            })
+        } catch (error) {
+            const alerta = {
+                msj: 'Hubo un error',
+                categoria: 'alerta-error'
+            }
+            dispatch({
+                type: PROYECTO_ERROR,
+                payload: alerta
+            })
+        }
     }
 
     const formularioVaico = () => {
@@ -63,18 +83,30 @@ const ProyectoState = props => {
         })
     }
 
-    const proyectoActual = poryecto => {
+    const setProyectoActual = poryecto => {
         dispatch({
             type: PROYECTO_ACTUAL,
             payload: poryecto
         })
     }
 
-    const eliminarProyecto = proyectoId => {
-        dispatch({
-            type: ELIMINAR_PROYECTO,
-            payload: proyectoId
-        })
+    const eliminarProyecto = async proyectoId => {
+        try {
+            await clienteAxios.delete(`api/proyectos/${proyectoId}`);
+            dispatch({
+                type: ELIMINAR_PROYECTO,
+                payload: proyectoId
+            })
+        } catch (error) {
+            const alerta = {
+                msj: 'Hubo un error',
+                categoria: 'alerta-error'
+            }
+            dispatch({
+                type: PROYECTO_ERROR,
+                payload: alerta
+            })
+        }
     }
 
     //por ultimo creamos el return del context. en el value pasamos el state inicial como se ve aquí:
@@ -84,12 +116,13 @@ const ProyectoState = props => {
                 proyectos: state.proyectos,
                 formulario: state.formulario,
                 errorform: state.errorform,
-                proyecto: state.proyecto,
+                proyectoActual: state.proyectoActual,
+                mensaje: state.mensaje,
                 mostrarFormulario,
                 obtenerProyectos,
                 agregarProyecto,
                 formularioVaico,
-                proyectoActual,
+                setProyectoActual,
                 eliminarProyecto
             }}>
             {props.children}

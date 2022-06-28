@@ -10,7 +10,7 @@ const FormTarea = () => {
         estado: false
     })
     const { nombre } = nuevaTarea;
-    const { proyecto } = useContext(ProyectoContext);
+    const { proyectoActual } = useContext(ProyectoContext);
     const {
         tareas,
         agregarTarea,
@@ -23,12 +23,12 @@ const FormTarea = () => {
     } = useContext(TareasContext);
 
     useEffect(() => {
-        if (proyecto) obtenerTareasProyecto(proyecto.id);
+        if (proyectoActual) obtenerTareasProyecto(proyectoActual._id);
         if (tareaActual) setNuevaTarea(tareaActual)
         //eslint-disable-next-line
     }, [tareas, tareaActual])
 
-    if (!proyecto) return null;
+    if (!proyectoActual) return null;
 
     const handleChange = e => {
         const datos = {
@@ -49,7 +49,7 @@ const FormTarea = () => {
             guardarCambiosTarea(nuevaTarea)
         } else {
             nuevaTarea.id = uuidv4();
-            nuevaTarea.proyectoId = proyecto.id;
+            nuevaTarea.proyectoId = proyectoActual._id;
             agregarTarea(nuevaTarea);
         }
         setNuevaTarea({

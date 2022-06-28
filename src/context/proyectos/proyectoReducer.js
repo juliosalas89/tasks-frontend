@@ -4,7 +4,8 @@ import {
     AGREGAR_PROYECTO,
     ERROR_FORMULARIO,
     PROYECTO_ACTUAL,
-    ELIMINAR_PROYECTO
+    ELIMINAR_PROYECTO,
+    PROYECTO_ERROR
 } from '../../types';
 
 const proyectoReducer = (state, action) => {
@@ -36,13 +37,18 @@ const proyectoReducer = (state, action) => {
         case PROYECTO_ACTUAL:
             return {
                 ...state,
-                proyecto: action.payload
+                proyectoActual: action.payload
             }
             case ELIMINAR_PROYECTO:
                 return {
                     ...state,
-                    proyectos: state.proyectos.filter(proyecto => proyecto.id !== action.payload),
+                    proyectos: state.proyectos.filter(proyecto => proyecto._id !== action.payload),
                     proyecto: null
+                }
+            case PROYECTO_ERROR:
+                return {
+                    ...state,
+                    mensaje: action.payload
                 }
         default:
             return state

@@ -3,13 +3,14 @@ import ProyectoContext from '../../context/proyectos/ProyectoContext';
 import TareasContext from '../../context/tareas/TareasContext';
 
 const Proyecto = ({ proyecto }) => {
-    const { proyectoActual } = useContext(ProyectoContext);
+    const { setProyectoActual } = useContext(ProyectoContext);
     const { obtenerTareasProyecto } = useContext(TareasContext);
 
     const seleccionarPoryecto = proyecto => {
-        proyectoActual(proyecto);
-        obtenerTareasProyecto(proyecto.id)
+        setProyectoActual(proyecto);
+        obtenerTareasProyecto(proyecto._id)
     }
+
 
     return (
         <li>

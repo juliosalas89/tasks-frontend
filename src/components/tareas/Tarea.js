@@ -39,7 +39,7 @@ const Tarea = ({ tarea }) => {
                 <button
                     type='button'
                     className='btn btn-secundario'
-                    onClick={() => eliminarTarea(tarea.id)}
+                    onClick={()=> eliminarTarea(tarea)}
                 >Eliminar</button>
             </div>
         </li>
