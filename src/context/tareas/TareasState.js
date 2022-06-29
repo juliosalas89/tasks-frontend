@@ -6,7 +6,6 @@ import {
     AGREGAR_TAREA,
     EDITAR_TAREA,
     ELIMINAR_TAREA,
-    ESTADO_TAREA,
     TAREAS_PROYECTO,
     TAREA_ACTUAL,
     VALIDAR_FORMTAREA
@@ -67,13 +66,6 @@ const TareasState = (props) => {
 
     }
 
-    const cambiarEstadoTarea = tarea => {
-        dispatch({
-            type: ESTADO_TAREA,
-            payload: tarea
-        })
-    }
-
     const setTareaActual = tarea => {
         dispatch({
             type: TAREA_ACTUAL,
@@ -81,11 +73,17 @@ const TareasState = (props) => {
         })
     }
 
-    const guardarCambiosTarea = tarea => {
-        dispatch({
-            type: EDITAR_TAREA,
-            payload: tarea
-        })
+    const guardarCambiosTarea = async tarea => {
+        try {
+            const respuesta = await clienteAxios.put(`/api/tareas/${tarea._id}`, tarea);
+            console.log(respuesta.data)
+            dispatch({
+                type: EDITAR_TAREA,
+                payload: respuesta.data
+            })
+        } catch (error) {
+            console.log(error);
+        }
     }
 
     return (
@@ -98,7 +96,6 @@ const TareasState = (props) => {
                 agregarTarea,
                 validarFormTarea,
                 eliminarTarea,
-                cambiarEstadoTarea,
                 setTareaActual,
                 guardarCambiosTarea
             }}>

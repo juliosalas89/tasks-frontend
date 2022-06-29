@@ -3,11 +3,11 @@ import { useContext } from 'react';
 import TareasContext from '../../context/tareas/TareasContext';
 
 const Tarea = ({ tarea }) => {
-    const { eliminarTarea, cambiarEstadoTarea, setTareaActual } = useContext(TareasContext)
+    const { eliminarTarea, guardarCambiosTarea, setTareaActual } = useContext(TareasContext)
 
     const handleEstadoTarea = booleano => {
         tarea.estado = booleano;
-        cambiarEstadoTarea(tarea)
+        guardarCambiosTarea(tarea)
     }
 
     return (
