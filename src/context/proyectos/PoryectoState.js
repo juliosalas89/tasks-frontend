@@ -1,10 +1,10 @@
 import React, { useReducer } from 'react';
-import clienteAxios from '../../config/axios';
+import clienteAxios from '../../config/axios.js';
 
 //importamos el context creado en proyectoContext
-import ProyectoContext from './ProyectoContext';
+import ProyectoContext from './ProyectoContext.js';
 //importamos el Reducer creado en proyectoReducer
-import proyectoReducer from './proyectoReducer';
+import proyectoReducer from './proyectoReducer.js';
 //Ahora importamos los types que vamos creando en la carpeta types, en el archivo index.js (le pusimos ese nombre para no tener que importar con el nombre del archivo, tambien podriamos haberle llamado de otra forma)
 import {
     FORMULARIO_PROYECTO,

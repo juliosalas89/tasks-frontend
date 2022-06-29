@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import AlertasContext from '../../context/alertas/AlertasContext';
-import AuthContext from '../../context/autenticacion/AuthContext';
+import AlertasContext from '../../context/alertas/AlertasContext.js';
+import AuthContext from '../../context/autenticacion/AuthContext.js';
 
 const Login = () => {
     const navigate = useNavigate();
