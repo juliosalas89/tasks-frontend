@@ -3,10 +3,12 @@ import Proyecto from './Proyecto';
 import ProyectoContext from '../../context/proyectos/ProyectoContext';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 import AlertasContext from '../../context/alertas/AlertasContext';
+import AuthContext from '../../context/autenticacion/AuthContext';
 
 const ListadoProyectos = () => {
-    const { mensaje, proyectos, obtenerProyectos } = useContext(ProyectoContext);
+    const { mensaje, proyectos, obtenerProyectos, setProyectoActual } = useContext(ProyectoContext);
     const { alerta, setAlerta } = useContext(AlertasContext);
+    const { usuarioActual } = useContext(AuthContext);
 
     useEffect(()=>{
         if(mensaje) setAlerta(mensaje.msj, mensaje.categoria);
@@ -15,8 +17,9 @@ const ListadoProyectos = () => {
 
     useEffect(() => {
         obtenerProyectos();
+        setProyectoActual(null);
         //eslint-disable-next-line
-    }, [])
+    }, [usuarioActual])
 
     if (proyectos.length === 0) return <p>No hay proyectos, crea un proyecto para empezar a trabajar</p>;
 

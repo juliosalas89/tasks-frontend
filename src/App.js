@@ -14,12 +14,12 @@ import Proyectos from "./components/proyectos/Proyectos";
 
 function App() {
 
-  useEffect(() => {
-    const token = localStorage.getItem('token')
-    if (token) {
-      tokenAuth(token)
-    }
-  }, [])
+  // useEffect(() => {
+  //   const token = localStorage.getItem('token')
+  //   if (token) {
+  //     tokenAuth(token)
+  //   }
+  // }, [])
 
 
   return (
