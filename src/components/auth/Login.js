@@ -19,6 +19,7 @@ const Login = () => {
         if (mensajeUsuario) {
             setAlerta(mensajeUsuario.msj, 'alerta-error')
         }
+        //eslint-disable-next-line
     }, [autenticado, mensajeUsuario])
 
 

@@ -23,6 +23,7 @@ const NuevaCuenta = () => {
         if(mensajeUsuario) {
             setAlerta(mensajeUsuario.msj, 'alerta-error')
         }
+        //eslint-disable-next-line
     }, [autenticado, mensajeUsuario])
 
     const handleChange = e => {
