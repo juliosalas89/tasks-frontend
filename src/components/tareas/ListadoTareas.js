@@ -9,7 +9,7 @@ const ListadoTareas = () => {
     const { proyectoActual, eliminarProyecto } = useContext(ProyectoContext);
     const { tareasPorProyecto } = useContext(TareasContext);
 
-    if (!proyectoActual) return <h2>Selecciona un proyecto</h2>
+    if (!proyectoActual) return <h2>Select a project</h2>
 
 
 
