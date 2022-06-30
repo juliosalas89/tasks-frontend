@@ -8,13 +8,13 @@ const Barra = () => {
     return (
         <header className='app-header'>
             {usuarioActual ?
-                <p className='nombre-usuario'>Hola <span>{usuarioActual.nombre}</span></p>
+                <p className='nombre-usuario'>Hi <span>{usuarioActual.nombre}</span></p>
                 : null}
             <nav className='nav-principal'>
                 <button
                     className='btn btn-blank cerrar-sesion'
                     onClick={cerrarSesion}
-                >Cerrar Sesion</button>
+                >Sign Out</button>
             </nav>
         </header>
     );

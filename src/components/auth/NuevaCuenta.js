@@ -41,15 +41,15 @@ const NuevaCuenta = () => {
             email.trim() === '' ||
             password.trim() === '' ||
             confirmar.trim() === '') {
-            setAlerta('Todos los campos son obligatorios', 'alerta-error')
+            setAlerta('Please complete the information requested', 'alerta-error')
             return;
         }
         if(password.trim().length < 6) {
-            setAlerta('El password debe tener al menos 6 caracteres', 'alerta-error')
+            setAlerta('password must have at least 6 characters', 'alerta-error')
             return;
         }
         if(password !== confirmar) {
-            setAlerta('El password no coincide', 'alerta-error')
+            setAlerta("password doesn't match", 'alerta-error')
             return;
         }
 
@@ -66,15 +66,15 @@ const NuevaCuenta = () => {
         <div className='form-usuario'>
             {alerta ? (<div className={`alerta ${alerta.categoria}`}>{alerta.msj}</div>) : null}
             <div className='contenedor-form sombra-dark'>
-                <h1>Crea una nueva cuenta:</h1>
+                <h1>Create an account:</h1>
                 <form onSubmit={handleSubmit}>
                     <div className='campo-form'>
-                        <label htmlFor="nombre">Nombre</label>
+                        <label htmlFor="nombre">Name</label>
                         <input
                             type="text"
                             id='nombre'
                             name='nombre'
-                            placeholder='Tu Nombre'
+                            placeholder='Your nombre'
                             onChange={handleChange}
                             value={nombre}
                         />
@@ -85,7 +85,7 @@ const NuevaCuenta = () => {
                             type="email"
                             id='email'
                             name='email'
-                            placeholder='Tu Email'
+                            placeholder='Your email'
                             onChange={handleChange}
                             value={email}
                         />
@@ -96,27 +96,27 @@ const NuevaCuenta = () => {
                             type="password"
                             id='password'
                             name='password'
-                            placeholder='Tu Password'
+                            placeholder='Your password'
                             onChange={handleChange}
                             value={password}
                         />
                     </div>
                     <div className='campo-form'>
-                        <label htmlFor="confirmar">Confirmar Password</label>
+                        <label htmlFor="confirmar">Confirm Password</label>
                         <input
                             type="password"
                             id='confirmar'
                             name='confirmar'
-                            placeholder='Repite tu Password'
+                            placeholder='Repeat your password'
                             onChange={handleChange}
                             value={confirmar}
                         />
                     </div>
                     <div className="campo-form">
-                        <input type="submit" className='btn btn-primario btn-block' value='Inicias Sesion' />
+                        <input type="submit" className='btn btn-primario btn-block' value='Sign Up' />
                     </div>
                 </form>
-                <Link to={'/'} className='enlace-cuenta'>Ya tiene una cuenta? Log in</Link>
+                <Link to={'/'} className='enlace-cuenta'>Already have an account? Log in</Link>
             </div>
         </div>
     );

@@ -38,17 +38,17 @@ const NuevoProyecto = () => {
                 type='button'
                 className='btn btn-block btn-primary'
                 onClick={mostrarFormulario}
-            >Nuevo Proyecto</button>
+            >New Project</button>
             {formulario ? (
                 <form
                     className='formulario-nuevo-proyecto'
                     onSubmit={handleSubmit}
                 >
-                    {errorform ? <p className='mensaje error'>Debe completar el campo</p> : null}
+                    {errorform ? <p className='mensaje error'>Please type project name</p> : null}
                     <input
                         type="text"
                         className='input-text'
-                        placeholder='Nombre Proyecto'
+                        placeholder='Project name'
                         name='nombre'
                         onChange={handleChange}
                         value={nombre}
@@ -56,7 +56,7 @@ const NuevoProyecto = () => {
                     <input
                         type="submit"
                         className='btn btn-primario btn-block'
-                        value='Agregar Proyecto'
+                        value='Add Project'
                     />
                 </form>
             ) : null

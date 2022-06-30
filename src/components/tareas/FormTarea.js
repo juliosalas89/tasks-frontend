@@ -74,7 +74,7 @@ const FormTarea = () => {
                     <input
                         type="text"
                         className='input-text'
-                        placeholder='Nombre Tarea... '
+                        placeholder='Task name... '
                         name='nombre'
                         onChange={handleChange}
                         value={nombre}
@@ -82,17 +82,17 @@ const FormTarea = () => {
                     {tareaActual ?
                         <button
                             onClick={cancelarEdicion}
-                        >Cancelar edición</button>
+                        >Cancel</button>
                         : null}
                 </div>
                 {
-                    erorFormTarea ? <p className='mensaje error'>Debe introducir un nombre de tarea</p> : null
+                    erorFormTarea ? <p className='mensaje error'>Please type a task</p> : null
                 }
                 <div className='contenedor-input'>
                     <input
                         type="submit"
                         className='btn btn-block btn-primario btn-submit'
-                        value={tareaActual ? 'Guardar cambios' : 'Agregar Tarea'}
+                        value={tareaActual ? 'Save Changes' : 'Add Task'}
                     />
                 </div>
             </form>

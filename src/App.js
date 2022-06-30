@@ -6,20 +6,11 @@ import ProyectoState from './context/proyectos/PoryectoState'
 import TareasState from "./context/tareas/TareasState";
 import AlertaState from "./context/alertas/AlertasState";
 import AuthState from "./context/autenticacion/AuthState";
-import tokenAuth from "./config/tokenAuth";
-import { useEffect } from "react";
 import Proyectos from "./components/proyectos/Proyectos";
 
 
 
 function App() {
-
-  // useEffect(() => {
-  //   const token = localStorage.getItem('token')
-  //   if (token) {
-  //     tokenAuth(token)
-  //   }
-  // }, [])
 
 
   return (
