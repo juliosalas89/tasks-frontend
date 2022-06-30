@@ -6,7 +6,6 @@ import clienteAxios from '../../config/axios.js';
 import tokenAuth from '../../config/tokenAuth.js';
 import {
     REGISTRO_EXITOSO,
-    REGISTRO_ERROR,
     OBTENER_USUARIO,
     LOGIN_EXITOSO,
     LOGIN_ERROR,
@@ -35,22 +34,13 @@ const AuthState = props => {
             setUsuarioActual(respuesta.data.token)
         } catch (error) {
             console.log(error.response.data.mensaje);
-            const alerta = {
-                msj: error.response.data.mensaje,
-                categoria: 'alerta-error'
-            }
-
-            dispatch({
-                type: REGISTRO_ERROR,
-                payload: alerta
-            })
         }
     }
 
     const iniciarSesion = async datos => {
         try {
             const respuesta = await clienteAxios.post('/api/auth', datos);
-            
+
             dispatch({
                 type: LOGIN_EXITOSO,
                 payload: respuesta.data
@@ -59,16 +49,7 @@ const AuthState = props => {
             setUsuarioActual(respuesta.data.token)
 
         } catch (error) {
-            console.log(error.response.data.mensaje);
-            const alerta = {
-                msj: error.response.data.mensaje,
-                categoria: 'alerta-error'
-            }
-
-            dispatch({
-                type: LOGIN_ERROR,
-                payload: alerta
-            })
+           console.log(error)
         }
     }
 
@@ -92,7 +73,7 @@ const AuthState = props => {
         }
     }
 
-    const cerrarSesion = ()=>{
+    const cerrarSesion = () => {
         dispatch({
             type: CERRAR_SESION
         })
