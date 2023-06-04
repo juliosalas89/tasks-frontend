@@ -1,35 +1,29 @@
 import React, { Fragment, useContext, useState } from 'react';
-import ProyectoContext from '../../context/proyectos/ProyectoContext';
+import ProjectContext from '../../context/projects/ProjectContext';
 
 
-const NuevoProyecto = () => {
-    const [proyecto, setProyecto] = useState({
-        nombre: ''
-    })
+const NewProject = () => {
+    const [project, setProject] = useState({ name: '' })
 
-    const proyectosContext = useContext(ProyectoContext);
-    const { formulario, errorform, mostrarFormulario, agregarProyecto, formularioVaico } = proyectosContext;
+    const projectContext = useContext(ProjectContext);
+    const { formulary, errorForm, showForm, addProject, emptyForm } = projectContext;
 
-    const { nombre } = proyecto;
+    const { name } = project;
 
     const handleChange = e => {
-        const nuevosDatos = {
-            ...proyecto,
+        const newData = {
+            ...project,
             [e.target.name]: e.target.value
         };
-        setProyecto(nuevosDatos);
+        setProject(newData);
     }
 
     const handleSubmit = e => {
         e.preventDefault();
-        if (nombre === '') {
-            formularioVaico();
-            return;
-        }
-        agregarProyecto(proyecto);
-        setProyecto({
-            nombre: ''
-        })
+        if (!name) return emptyForm();
+
+        addProject(project);
+        setProject({ name: '' })
     }
 
     return (
@@ -37,21 +31,21 @@ const NuevoProyecto = () => {
             <button
                 type='button'
                 className='btn btn-block btn-primary'
-                onClick={mostrarFormulario}
+                onClick={showForm}
             >New Project</button>
-            {formulario ? (
+            {formulary ? (
                 <form
-                    className='formulario-nuevo-proyecto'
+                    className='new-project-from'
                     onSubmit={handleSubmit}
                 >
-                    {errorform ? <p className='mensaje error'>Please type project name</p> : null}
+                    {errorForm ? <p className='message error'>Please type project name</p> : null}
                     <input
                         type="text"
                         className='input-text'
                         placeholder='Project name'
-                        name='nombre'
+                        name='name'
                         onChange={handleChange}
-                        value={nombre}
+                        value={name}
                     />
                     <input
                         type="submit"
@@ -65,4 +59,4 @@ const NuevoProyecto = () => {
     );
 };
 
-export default NuevoProyecto;
+export default NewProject;

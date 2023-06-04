@@ -1,55 +1,55 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import AlertasContext from '../../context/alertas/AlertasContext.js';
-import AuthContext from '../../context/autenticacion/AuthContext.js';
+import AlertsContext from '../../context/alerts/AlertsContext.js';
+import AuthContext from '../../context/authentication/AuthContext.js';
 
 const Login = () => {
     const navigate = useNavigate();
-    const [usuario, setUsuario] = useState({
+    const [user, setUser] = useState({
         email: '',
         password: ''
     });
-    const { alerta, setAlerta } = useContext(AlertasContext);
-    const { iniciarSesion, mensajeUsuario, autenticado } = useContext(AuthContext);
-    const { email, password } = usuario;
+    const { alert, setAlerta } = useContext(AlertsContext);
+    const { logIn, userMessage, authenticated } = useContext(AuthContext);
+    const { email, password } = user;
 
     useEffect(() => {
-        if (autenticado) navigate('/proyectos')
-        if (mensajeUsuario) {
-            setAlerta(mensajeUsuario.msj, 'alerta-error')
+        if (authenticated) navigate('/projects')
+        if (userMessage) {
+            setAlerta(userMessage.message, 'alert-error')
         }
         //eslint-disable-next-line
-    }, [autenticado, mensajeUsuario])
+    }, [authenticated, userMessage])
 
 
     const handleChange = e => {
-        const nuevosDatos = {
-            ...usuario,
+        const newData = {
+            ...user,
             [e.target.name]: e.target.value
         };
-        setUsuario(nuevosDatos);
+        setUser(newData);
     }
 
     const handleSubmit = e => {
         e.preventDefault();
 
         if (email.trim() === '' || password.trim() === '') {
-            setAlerta('Please complete the information requested', 'alerta-error')
+            setAlerta('Please complete the information requested', 'alert-error')
             return;
         }
 
-        iniciarSesion({ email, password });
+        logIn({ email, password });
     }
 
 
 
     return (
-        <div className='form-usuario'>
-            {alerta ? (<div className={`alerta ${alerta.categoria}`}>{alerta.msj}</div>) : null}
-            <div className='contenedor-form sombra-dark'>
+        <div className='form-user'>
+            {alert ? (<div className={`alert ${alert.category}`}>{alert.message}</div>) : null}
+            <div className='form-container shadow-dark'>
                 <h1>Log in with your account</h1>
                 <form onSubmit={handleSubmit}>
-                    <div className='campo-form'>
+                    <div className='form-field'>
                         <label htmlFor="email">Email</label>
                         <input
                             type="email"
@@ -60,7 +60,7 @@ const Login = () => {
                             value={email}
                         />
                     </div>
-                    <div className='campo-form'>
+                    <div className='form-field'>
                         <label htmlFor="password">Password</label>
                         <input
                             type="password"
@@ -71,11 +71,11 @@ const Login = () => {
                             value={password}
                         />
                     </div>
-                    <div className="campo-form">
+                    <div className="form-field">
                         <input type="submit" className='btn btn-primario btn-block' value='Log In' />
                     </div>
                 </form>
-                <Link to={'/nueva-cuenta'} className='enlace-cuenta'>New around here? Create your account</Link>
+                <Link to={'/new-account'} className='account-link'>New around here? Create your account</Link>
             </div>
         </div>
     );

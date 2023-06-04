@@ -1,12 +1,12 @@
 import { Fragment } from "react";
 import Login from "./components/auth/Login";
 import { Routes, Route} from "react-router-dom";
-import NuevaCuenta from "./components/auth/NuevaCuenta";
-import ProyectoState from './context/proyectos/PoryectoState'
-import TareasState from "./context/tareas/TareasState";
-import AlertaState from "./context/alertas/AlertasState";
-import AuthState from "./context/autenticacion/AuthState";
-import Proyectos from "./components/proyectos/Proyectos";
+import SignUp from "./components/auth/SignUp";
+import ProjectState from './context/projects/ProjectState'
+import TasksState from "./context/tasks/TasksState";
+import AlertsState from "./context/alerts/AlertsState";
+import AuthState from "./context/authentication/AuthState";
+import Projects from "./components/projects/Projects";
 
 
 
@@ -15,19 +15,19 @@ function App() {
 
   return (
     <AuthState>
-      <AlertaState>
-        <TareasState>
-          <ProyectoState>
+      <AlertsState>
+        <TasksState>
+          <ProjectState>
             <Fragment>
               <Routes>
                 <Route path='/' element={<Login></Login>}></Route>
-                <Route path='/nueva-cuenta' element={<NuevaCuenta></NuevaCuenta>}></Route>
-                <Route path='/proyectos' element={<Proyectos></Proyectos>}></Route>
+                <Route path='/new-account' element={<SignUp></SignUp>}></Route>
+                <Route path='/projects' element={<Projects></Projects>}></Route>
               </Routes>
             </Fragment>
-          </ProyectoState>
-        </TareasState>
-      </AlertaState>
+          </ProjectState>
+        </TasksState>
+      </AlertsState>
     </AuthState>
   );
 }

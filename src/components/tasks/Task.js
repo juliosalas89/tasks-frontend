@@ -1,49 +1,49 @@
 import React from 'react';
 import { useContext } from 'react';
-import TareasContext from '../../context/tareas/TareasContext';
+import TasksContext from '../../context/tasks/TasksContext';
 
-const Tarea = ({ tarea }) => {
-    const { eliminarTarea, guardarCambiosTarea, setTareaActual } = useContext(TareasContext)
+const Task = ({ task }) => {
+    const { deleteTask, saveTaskChanges, setCurrentTask } = useContext(TasksContext)
 
     const handleEstadoTarea = booleano => {
-        tarea.estado = booleano;
-        guardarCambiosTarea(tarea)
+        task.state = booleano;
+        saveTaskChanges(task)
     }
 
     return (
-        <li className='tarea sombra'>
-            <p>{tarea.nombre}</p>
-            <div className='estado'>
+        <li className='task shadow'>
+            <p>{task.name}</p>
+            <div className='state'>
                 {
-                    tarea.estado ? (
+                    task.state ? (
                         <button
                             type='button'
-                            className='completo'
+                            className='complete'
                             onClick={() => handleEstadoTarea(false)}
                         >Complete</button>
                     ) : (
                         <button
                             type='button'
-                            className='incompleto'
+                            className='incomplete'
                             onClick={() => handleEstadoTarea(true)}
                         >Incomplete</button>
                     )
                 }
             </div>
-            <div className='acciones'>
+            <div className='actions'>
                 <button
                     type='button'
                     className='btn btn-primario'
-                    onClick={() => setTareaActual(tarea)}
+                    onClick={() => setCurrentTask(task)}
                 >Edit task</button>
                 <button
                     type='button'
                     className='btn btn-secundario'
-                    onClick={()=> eliminarTarea(tarea)}
+                    onClick={()=> deleteTask(task)}
                 >Delete</button>
             </div>
         </li>
     );
 };
 
-export default Tarea;
+export default Task;

@@ -2,59 +2,59 @@ import React, { useState } from 'react';
 import { useEffect } from 'react';
 import { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import AlertasContext from '../../context/alertas/AlertasContext';
-import AuthContext from '../../context/autenticacion/AuthContext';
+import AlertsContext from '../../context/alerts/AlertsContext';
+import AuthContext from '../../context/authentication/AuthContext';
 
-const NuevaCuenta = () => {
-    const [nuevoUsuario, setNuevoUsuario] = useState({
-        nombre: '',
+const SignUp = () => {
+    const [newUser, setNewUser] = useState({
+        name: '',
         email: '',
         password: '',
-        confirmar: ''
+        confirm: ''
     });
     const navigate = useNavigate();
 
-    const { alerta, setAlerta } = useContext(AlertasContext);
-    const { mensajeUsuario, autenticado, registrarUsuario } = useContext(AuthContext);
-    const { nombre, email, password, confirmar } = nuevoUsuario;
+    const { alert, setAlert } = useContext(AlertsContext);
+    const { userMessage, authenticated, registerUser } = useContext(AuthContext);
+    const { name, email, password, confirm } = newUser;
 
     useEffect(()=>{
-        if (autenticado) navigate('/proyectos')
-        if(mensajeUsuario) {
-            setAlerta(mensajeUsuario.msj, 'alerta-error')
+        if (authenticated) navigate('/projects')
+        if(userMessage) {
+            setAlert(userMessage.message, 'alert-error')
         }
         //eslint-disable-next-line
-    }, [autenticado, mensajeUsuario])
+    }, [authenticated, userMessage])
 
     const handleChange = e => {
-        const nuevosDatos = {
-            ...nuevoUsuario,
+        const newData = {
+            ...newUser,
             [e.target.name]: e.target.value
         };
-        setNuevoUsuario(nuevosDatos);
+        setNewUser(newData);
     };
 
     const handleSubmit = e => {
         e.preventDefault();
         //TODO: validacion
-        if (nombre.trim() === '' ||
+        if (name.trim() === '' ||
             email.trim() === '' ||
             password.trim() === '' ||
-            confirmar.trim() === '') {
-            setAlerta('Please complete the information requested', 'alerta-error')
+            confirm.trim() === '') {
+            setAlert('Please complete the information requested', 'alert-error')
             return;
         }
         if(password.trim().length < 6) {
-            setAlerta('password must have at least 6 characters', 'alerta-error')
+            setAlert('password must have at least 6 characters', 'alert-error')
             return;
         }
-        if(password !== confirmar) {
-            setAlerta("password doesn't match", 'alerta-error')
+        if(password !== confirm) {
+            setAlert("password doesn't match", 'alert-error')
             return;
         }
 
-        registrarUsuario({
-            nombre,
+        registerUser({
+            name,
             email,
             password
         });
@@ -63,23 +63,23 @@ const NuevaCuenta = () => {
 
 
     return (
-        <div className='form-usuario'>
-            {alerta ? (<div className={`alerta ${alerta.categoria}`}>{alerta.msj}</div>) : null}
-            <div className='contenedor-form sombra-dark'>
+        <div className='form-user'>
+            {alert ? (<div className={`alert ${alert.category}`}>{alert.message}</div>) : null}
+            <div className='form-container shadow-dark'>
                 <h1>Create an account:</h1>
                 <form onSubmit={handleSubmit}>
-                    <div className='campo-form'>
-                        <label htmlFor="nombre">Name</label>
+                    <div className='form-field'>
+                        <label htmlFor="name">Name</label>
                         <input
                             type="text"
-                            id='nombre'
-                            name='nombre'
-                            placeholder='Your nombre'
+                            id='name'
+                            name='name'
+                            placeholder='Your name'
                             onChange={handleChange}
-                            value={nombre}
+                            value={name}
                         />
                     </div>
-                    <div className='campo-form'>
+                    <div className='form-field'>
                         <label htmlFor="email">Email</label>
                         <input
                             type="email"
@@ -90,7 +90,7 @@ const NuevaCuenta = () => {
                             value={email}
                         />
                     </div>
-                    <div className='campo-form'>
+                    <div className='form-field'>
                         <label htmlFor="password">Password</label>
                         <input
                             type="password"
@@ -101,25 +101,25 @@ const NuevaCuenta = () => {
                             value={password}
                         />
                     </div>
-                    <div className='campo-form'>
-                        <label htmlFor="confirmar">Confirm Password</label>
+                    <div className='form-field'>
+                        <label htmlFor="confirm">Confirm Password</label>
                         <input
                             type="password"
-                            id='confirmar'
-                            name='confirmar'
+                            id='confirm'
+                            name='confirm'
                             placeholder='Repeat your password'
                             onChange={handleChange}
-                            value={confirmar}
+                            value={confirm}
                         />
                     </div>
-                    <div className="campo-form">
+                    <div className="form-field">
                         <input type="submit" className='btn btn-primario btn-block' value='Sign Up' />
                     </div>
                 </form>
-                <Link to={'/'} className='enlace-cuenta'>Already have an account? Log in</Link>
+                <Link to={'/'} className='account-link'>Already have an account? Log in</Link>
             </div>
         </div>
     );
 };
 
-export default NuevaCuenta;
+export default SignUp;

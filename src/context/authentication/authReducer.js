@@ -1,43 +1,43 @@
 import {
-    REGISTRO_EXITOSO,
-    REGISTRO_ERROR,
-    OBTENER_USUARIO,
-    LOGIN_EXITOSO,
+    SIGN_UP_SUCCESS,
+    SIGN_UP_ERROR,
+    GET_USER,
+    LOGIN_SUCCESS,
     LOGIN_ERROR,
-    CERRAR_SESION
+    LOG_OUT
 } from '../../types';
 
 const authReducer = (state, action) => {
     switch (action.type) {
-        case LOGIN_EXITOSO:
-        case REGISTRO_EXITOSO:
+        case LOGIN_SUCCESS:
+        case SIGN_UP_SUCCESS:
             //guardamos el token que llega en el local storage
             localStorage.setItem('token', action.payload.token);
             return {
                 ...state,
-                autenticado: true,
+                authenticated: true,
                 mensajeNuevoUsuario: null,
-                cargando: false,
+                loading: false,
                 token: action.payload.token
             }
-        case CERRAR_SESION:
+        case LOG_OUT:
         case LOGIN_ERROR:
-        case REGISTRO_ERROR:
+        case SIGN_UP_ERROR:
             localStorage.removeItem('token')
             return {
                 ...state,
                 token: null,
-                usuarioActual: null,
-                autenticado: null,
-                mensajeUsuario: action.payload,
-                cargando: false
+                currentUser: null,
+                authenticated: null,
+                userMessage: action.payload,
+                loading: false
             }
-        case OBTENER_USUARIO:
+        case GET_USER:
             return {
                 ...state,
-                usuarioActual: action.payload,
-                autenticado: true,
-                cargando: false
+                currentUser: action.payload,
+                authenticated: true,
+                loading: false
             }
         default:
             return state;
