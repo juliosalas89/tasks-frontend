@@ -9,14 +9,14 @@ const Login = () => {
         email: '',
         password: ''
     });
-    const { alert, setAlerta } = useContext(AlertsContext);
+    const { alert, setAlert } = useContext(AlertsContext);
     const { logIn, userMessage, authenticated } = useContext(AuthContext);
     const { email, password } = user;
 
     useEffect(() => {
         if (authenticated) navigate('/projects')
         if (userMessage) {
-            setAlerta(userMessage.message, 'alert-error')
+            setAlert(userMessage.message, 'alert-error')
         }
         //eslint-disable-next-line
     }, [authenticated, userMessage])
@@ -34,7 +34,7 @@ const Login = () => {
         e.preventDefault();
 
         if (email.trim() === '' || password.trim() === '') {
-            setAlerta('Please complete the information requested', 'alert-error')
+            setAlert('Please complete the information requested', 'alert-error')
             return;
         }
 

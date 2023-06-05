@@ -14,7 +14,7 @@ const UserBar = () => {
                 <button
                     className='btn btn-blank log-out'
                     onClick={logOut}
-                >Sign Out</button>
+                >Log Out</button>
             </nav>
         </header>
     );

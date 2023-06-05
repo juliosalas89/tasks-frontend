@@ -13,7 +13,6 @@ import {
 } from '../../types';
 
 const AuthState = props => {
-    //vamos a iniciar nuestro state con un token, que va a estar almacenado en local storage
     const initialState = {
         token: localStorage.getItem('token'),
         authenticated: null,
@@ -29,7 +28,7 @@ const AuthState = props => {
             const response = await axiosClient.post('/api/user/', datos)
             dispatch({
                 type: SIGN_UP_SUCCESS,
-                payload: response.data //pasamos la response pq ahí viene el token desde el back
+                payload: response.data 
             })
             setCurrentUser(response.data.token)
         } catch (error) {
@@ -49,26 +48,35 @@ const AuthState = props => {
             setCurrentUser(response.data.token)
 
         } catch (error) {
-           console.log(error)
+            console.log(error.response.data.message)
+            dispatch({
+                type: LOGIN_ERROR,
+                payload: {
+                    message: error.response.data.message,
+                    category: 'alert-error'
+                } 
+            })
         }
     }
 
     const setCurrentUser = async token => {
-        if (token) {
-            //TODO: funcion para enviar el token en los headers de todos los req
-            tokenAuth(token)
-        }
+        token && tokenAuth(token)
+        
         try {
             const response = await axiosClient.get('/api/auth')
-            // console.log(response.data.usuarioauthenticated)
+            console.log('setCurrentUser', response)
             dispatch({
                 type: GET_USER,
-                payload: response.data.usuarioauthenticated
+                payload: response.data.authenticatedUser
             })
         } catch (error) {
             console.log(error.response)
             dispatch({
-                type: LOGIN_ERROR
+                type: LOGIN_ERROR,
+                payload: {
+                    message: error.response.data.message,
+                    category: 'alert-error'
+                } 
             })
         }
     }
