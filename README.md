@@ -6,7 +6,7 @@
 1- Authentication with JSON Web Token.\
 2- axios.\
 3- useContext React Hook.\
-4- useReducer React Hook.\
+4- useReducer React Hook.
 
 
 ### `npm start`
