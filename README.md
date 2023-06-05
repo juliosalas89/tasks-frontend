@@ -3,10 +3,10 @@
 ### This project is the CLIENT side of a MERN FULL-STACK project. It was developed in june 2022 to practice applying and integrating some technologies that where new for me at that time. (server side in https://github.com/juliosalas89/tasks-backend)
 
 ## Some technologies implemented:
-1- Authentication with JSON Web Token.
-2- axios.
-3- useContext React Hook.
-4- useReducer React Hook.
+1- Authentication with JSON Web Token.\
+2- axios.\
+3- useContext React Hook.\
+4- useReducer React Hook.\
 
 
 ### `npm start`
